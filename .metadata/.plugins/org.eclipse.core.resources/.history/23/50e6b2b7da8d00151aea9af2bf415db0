@@ -1,0 +1,41 @@
+package test;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.testng.annotations.Test;
+
+public class FileDownloadExample {
+	
+	
+	@Test
+	public void testDownload() throws Exception {
+		WebDriver driver = new FirefoxDriver(FirefoxDriverProfile());	
+		driver.manage().window().maximize();
+		driver.get("http://thewalter.net/stef/software/rtfx/");
+		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+		driver.findElement(By.xpath("html/body/ul[1]/li[4]/a[1]")).click();
+	}
+	
+	public static FirefoxProfile FirefoxDriverProfile() throws Exception {
+		FirefoxProfile profile = new FirefoxProfile();
+		profile.setPreference("browser.download.folderList", 2);
+		profile.setPreference("browser.download.manager.showWhenStarting", false);
+		profile.setPreference("browser.download.dir", "F:\\Download");
+		profile.setPreference("browser.helperApps.neverAsk.openFile",
+				"text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
+		profile.setPreference("browser.helperApps.neverAsk.saveToDisk",
+"text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
+		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
+		profile.setPreference("browser.download.manager.alertOnEXEOpen", false);
+		profile.setPreference("browser.download.manager.focusWhenStarting", false);
+		profile.setPreference("browser.download.manager.useWindow", false);
+		profile.setPreference("browser.download.manager.showAlertOnComplete", false);
+		profile.setPreference("browser.download.manager.closeWhenDone", false);
+		return profile;
+	}
+
+}

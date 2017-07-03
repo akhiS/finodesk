@@ -1,0 +1,15 @@
+package com.test;
+
+public class TestMethod {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		test("akhilesh");
+		//test("amrish");
+
+	}
+    public static void test(String x){
+    	System.out.println("Hellloooo "+x);
+    }
+}

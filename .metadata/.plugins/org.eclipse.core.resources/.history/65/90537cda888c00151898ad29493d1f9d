@@ -1,0 +1,25 @@
+package com.fino;
+
+import java.text.SimpleDateFormat;
+import java.util.Properties;
+
+import org.openqa.selenium.WebDriver;
+
+import junit.framework.TestCase;
+
+public class WebDriveCommon extends TestCase {
+	
+   //public static LoginPage logInPage;
+	
+	public static WebDriver driver;
+	public static Properties commPropPSN = new LoadPropertyFile().readPropertyFile("common.properties");
+	public static String browser = commPropPSN.getProperty("browserFF");
+	public static String time1, time2;
+	private static final String hoursToRunIteration = commPropPSN.getProperty("hoursToRunIteration");
+	public static final String numberOfLogInAttempts = commPropPSN.getProperty("numberOfLogInAttempts");
+	SimpleDateFormat format1 = new SimpleDateFormat("HH-mm-ss");
+
+
+	
+
+}

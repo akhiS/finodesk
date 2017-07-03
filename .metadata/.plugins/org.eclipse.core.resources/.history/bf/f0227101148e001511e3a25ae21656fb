@@ -1,0 +1,7 @@
+suite name="Newtours demo suite"  >
+  <test name="Login on newtours site" >
+    <classes>
+       <class name="work.OBCOperativeAccountSummaryTest" />
+    </classes>
+  </test>
+ </suite>

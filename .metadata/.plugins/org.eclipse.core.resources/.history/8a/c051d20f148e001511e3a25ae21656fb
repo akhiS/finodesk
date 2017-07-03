@@ -1,0 +1,8 @@
+suite name="Newtours demo suite"  >
+  <test name="Login on newtours site" >
+  <parameter name="browser" value="firefox" />
+    <classes>
+       <class name="work.OBCOperativeAccountSummaryTest" />
+    </classes>
+  </test>
+ </suite>

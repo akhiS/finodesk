@@ -1,0 +1,5 @@
+#OBC Reports Date DD/MM/YY format
+OBCCorporateURL=https://www.obconline.co.in/
+inputFileNameOBC=F:\\bank.xlsx
+txnSrcFromDateOBC=01/07/15
+txnSrcToDateOBC=04/07/15

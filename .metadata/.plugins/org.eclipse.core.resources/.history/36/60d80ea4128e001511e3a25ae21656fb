@@ -1,0 +1,7 @@
+suite name="Newtours demo suite"  >
+  <test name="Login on newtours site" >
+    <classes>
+       <class name="day6.DropdownTesting1" />
+    </classes>
+  </test>
+ </suite>

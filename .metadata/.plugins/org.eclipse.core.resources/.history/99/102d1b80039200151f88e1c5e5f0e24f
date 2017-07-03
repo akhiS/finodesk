@@ -1,0 +1,180 @@
+package work;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import junit.framework.TestCase;
+
+public class WebDriveCommon extends TestCase {
+	
+   public static LoginPage logInPage;
+	
+	public static WebDriver driver;
+	public static Properties commPropPSN = new LoadPropertyFile().readPropertyFile("common.properties");
+	public static String browser = commPropPSN.getProperty("browserFF");
+	public static String time1, time2;
+	private static final String hoursToRunIteration = commPropPSN.getProperty("hoursToRunIteration");
+	public static final String numberOfLogInAttempts = commPropPSN.getProperty("numberOfLogInAttempts");
+	SimpleDateFormat format1 = new SimpleDateFormat("HH-mm-ss");
+	
+	public void launchWebDriver(String browser)
+	{	
+		/* Launch Browser */
+		if(browser.equals("firefox"))
+			driver = new FirefoxDriver();
+		else if(browser.equals("ie"))
+		{
+			DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+			capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+			File file = new File("D:\\Anita\\WorkSpace\\WebDriverDemoICICI\\lib\\IEDriverServer.exe");
+			System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+            driver = new InternetExplorerDriver(capabilities);
+		}
+		/* Set Browser URL */
+		driver.get(commPropPSN.getProperty("ICICICorporateURL"));
+
+		/* Wait for Page to load and maximize the window */
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(120, TimeUnit.SECONDS);
+		driver.manage().window().maximize();		
+	}
+	
+/*	private Object getProperty(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
+
+	public FirefoxProfile getProfile()
+	{	
+		
+		FirefoxProfile profile = new FirefoxProfile();
+		profile.setPreference("browser.download.folderList", 2);
+		profile.setPreference("browser.download.manager.showWhenStarting", false);
+		profile.setPreference("browser.download.dir", "F:\\Download");
+		profile.setPreference("browser.helperApps.neverAsk.openFile",
+				"text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
+		profile.setPreference("browser.helperApps.neverAsk.saveToDisk",
+"text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
+		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
+		profile.setPreference("browser.download.manager.alertOnEXEOpen", false);
+		profile.setPreference("browser.download.manager.focusWhenStarting", false);
+		profile.setPreference("browser.download.manager.useWindow", false);
+		profile.setPreference("browser.download.manager.showAlertOnComplete", false);
+		profile.setPreference("browser.download.manager.closeWhenDone", false);
+		return profile;
+	}
+	
+	public void launchWebDriverWithProfileForTXT(String browser, String URL)
+	{	
+		
+		
+		/* Launch Browser */
+		/*FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("browser.download.folderList", 2);
+        // 0 = desktop, 1 = default download folder , 2 = user defined location.
+        profile.setPreference("browser.download.manager.showWhenStarting",false);
+        profile.setPreference("browser.download.dir", "D:\\Anita\\WorkSpace\\WebDriverDemoSAP\\TestData\\Downloads");
+        profile.setPreference("browser.helperApps.neverAsk.saveToDisk",
+        		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;"//MIME types Of MS Excel File.
+        + "text/vnd.abc;text/html;text/x-asm;text/asp;text/x-c;application/pdf;" //MIME types Of PDF File.
+        + "application/vnd.openxmlformats-officedocument.wordprocessingml.document;" //MIME types Of MS doc File.
+        + "text/plain;text/x-script.csh;text/css;" //MIME types Of text File.
+        + "text/csv;"
+        + "text/plain;text/xml;text/csv;text/plain;text/log;application/zlib;application/x-gzip;application/x-compressed;application/x-gtar;multipart/x-gzip;application/tgz;application/gnutar;application/x-tar;application/gzip");
+        profile.setPreference( "browser.download.manager.showWhenStarting", false );
+        profile.setPreference( "pdfjs.disabled", true );
+        profile.setPreference( "pdfjs.firstRun", false );
+      //  profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/xml, text/csv, text/plain, text/log, application/zlib, application/x-gzip, application/x-compressed, application/x-gtar, multipart/x-gzip, application/tgz, application/gnutar, application/x-tar, application/gzip");
+        //text/csv,application/csv,application/vnd.ms-excel
+        driver = new FirefoxDriver(profile); 
+		
+		 Set Browser URL 
+		driver.get(URL);*/
+
+		/* Wait for Page to load and maximize the window */
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(120, TimeUnit.SECONDS);
+		driver.manage().window().maximize();		
+	}
+	/*public static void waitForElement(By by, int timeOutSecs) throws Exception {		
+		int counter = 0;
+		while(counter<timeOutSecs)
+		{						
+			if (isElementPresent(driver, by))
+            {
+                System.out.println("Waited for " + counter + " secs for element to get displayed");
+            	return;
+            }
+			else 
+			{
+				Thread.sleep(1000);
+				counter++;
+			}			
+			System.out.println("Counter Count"+counter);
+		}
+		
+		System.out.println("TimeOut Error: Element did not load in time");
+	}
+	*/
+	public static boolean isElementPresent(WebDriver driver, By by){
+		try{
+			///System.out.println("Element is present");
+			   driver.findElement(by);
+				return true;
+		}catch(NoSuchElementException e){
+			
+			//System.out.println("Element not present1");
+			return false;
+		}catch(Exception ex ){
+			//System.out.println("Element not present2");
+			return false;
+		}
+	}
+
+   public void writeNoTransactionInformation(List<String> noTransaction,String fromDate,String toDate){
+	   try {
+		File dir = new File("E:\\NoTransactiondata");
+			 String fileName = "No_Transaction_Information";
+			 if(!dir.exists()){
+			        dir.mkdir();
+			 }
+			
+			 File file = new File(dir,fileName+".txt");
+
+			 // if file doesnt exists, then create it
+			 if (!file.exists()) {
+			        file.createNewFile();
+			 }
+
+			 FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			 BufferedWriter bw = new BufferedWriter(fw);
+			 for(String accNo : noTransaction){
+				 bw.write("For Account Number "+accNo+" No transaction founds from "+txnSrcFromDate+" To "+txnSrcToDate);
+			     bw.newLine();
+				 
+			 }
+			 bw.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	   
+   }
+
+	
+
+}

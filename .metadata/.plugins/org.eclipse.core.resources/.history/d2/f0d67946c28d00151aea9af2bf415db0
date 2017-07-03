@@ -1,0 +1,59 @@
+package test;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
+
+public class Launch {
+
+	public static void main(String[] args) {
+		
+		/*ProfilesIni pr= new ProfilesIni();
+		FirefoxProfile fp= pr.getProfile("MyProfile");
+		FirefoxDriver driver=new FirefoxDriver(fp);
+		fp.setPreference("browser.download.folderList", 2);
+		fp.setPreference("browser.download.manager.showWhenStarting", false);
+		fp.setPreference("browser.download.dir", "F:\\Download");
+		fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-gzip");
+		driver*/
+		FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("browser.download.folderList", 2);
+        
+        profile.setPreference("browser.download.manager.showWhenStarting",false);
+        profile.setPreference("browser.download.dir", "F:\\Download");
+        profile.setPreference("browser.helperApps.neverAsk.saveToDisk",
+        		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;"//MIME types Of MS Excel File.
+        + "text/vnd.abc;text/html;text/x-asm;text/asp;text/x-c;application/pdf;" //MIME types Of PDF File.
+        + "application/vnd.openxmlformats-officedocument.wordprocessingml.document;" //MIME types Of MS doc File.
+        + "text/plain;text/x-script.csh;text/css;" //MIME types Of text File.
+        + "text/csv;"
+        + "text/plain;text/xml;text/csv;text/plain;text/log;application/zlib;application/x-gzip;application/x-compressed;application/x-gtar;multipart/x-gzip;application/tgz;application/gnutar;application/x-tar;application/gzip");
+        profile.setPreference( "browser.download.manager.showWhenStarting", false );
+        profile.setPreference( "pdfjs.disabled", true );
+        profile.setPreference( "pdfjs.firstRun", false );
+      //  profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/xml, text/csv, text/plain, text/log, application/zlib, application/x-gzip, application/x-compressed, application/x-gtar, multipart/x-gzip, application/tgz, application/gnutar, application/x-tar, application/gzip");
+        //text/csv,application/csv,application/vnd.ms-excel
+       FirefoxDriver driver = new FirefoxDriver(profile); 
+		
+		
+		
+		
+		
+		/*Profile = webdriver.FirefoxProfile();
+				profile.set_preference("browser.download.folderList", 2);
+				profile.set_preference("browser.download.manager.showWhenStarting", False);
+				profile.set_preference("browser.download.dir", "F:\\Download");
+				profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/x-gzip");
+				driver = webdriver.Firefox(firefox_profile=profile);*/
+		driver.get("http://docs.seleniumhq.org/");
+		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+		driver.findElement(By.xpath("//*[@id='menu_download']/a")).click();
+		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+		driver.findElement(By.xpath("//*[@id='mainContent']/ul[2]/li[1]/a")).click();
+
+	}
+
+}

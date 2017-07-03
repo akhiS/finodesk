@@ -1,0 +1,168 @@
+package com.fino;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Mouse;
+import org.openqa.selenium.internal.Locatable;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class LoginPage extends WebDriverCommon{
+	
+	@FindBy(name="CorporateSignonCorpId")
+	private WebElement userName;
+	
+	@FindBy(name="CorporateSignonPassword")
+	private WebElement password;
+	
+	@FindBy(name="CorporateSignonUserName")
+	private WebElement userID;	
+	
+	/*@FindBy(xpath="//td/div/div/div/ul/li/a")
+	public WebElement loadaccounts1;	*/
+	
+	
+	@FindBy(xpath="//input[@id='arcotsubmit']")
+	public WebElement loginBtn;
+	
+	@FindBy(xpath="//*[@class='form_bg width220']/div[3]/a[2]")
+	public WebElement corpLink;
+	
+	@FindBy(xpath="//*[text()[contains(.,'Approvals')]]")
+	public WebElement lnkPendingApprovals;
+	
+	@FindBy(xpath="(//a[contains(text(),'Home')])[2]")
+	public WebElement lnkHomePage;
+	
+	@FindBy(name="Action.CorpUser.mwftApprove")
+	public WebElement activityID;	
+	
+	@FindBy(name="ValCorpTxnPwdTxnPwd")
+	public WebElement txtTransactionPwd;
+	
+	@FindBy(name="Action.CorpUser.mwftApprOK")
+	public WebElement btnApproveTransactionOk;
+	
+	@FindBy(xpath="//*[text()[contains(.,'Transfers')]]")
+	public WebElement mnuTransfers;
+	
+	@FindBy(xpath="//a[contains(text(),'Trade')]")
+	public WebElement mnuTrade;
+	
+	@FindBy(xpath="//tr[2]/td/table/tbody/tr/td[3]/a") //"//a[contains(text(),'Accounts')]"
+	public WebElement mnuAccounts;
+	
+	@FindBy(xpath="//table[2]/tbody/tr[2]/td[1]")
+	public WebElement transactionNumber;
+	
+	@FindBy(xpath="//table[2]/tbody/tr[2]/td[2]")
+	public WebElement transactionTime;
+	
+	@FindBy(xpath="//table[2]/tbody/tr[2]/td[5]")
+	public WebElement transactionAmount;
+	
+	@FindBy(xpath="//table[2]/tbody/tr[2]/td[3]")
+	public WebElement debitAccNumber;
+	
+	@FindBy(xpath="//table[2]/tbody/tr[2]/td[4]")
+	public WebElement creditAccNumber;
+	
+	@FindBy(xpath="//form/center/table/tbody/tr/td")
+	public WebElement transactionMessage;
+	
+	@FindBy(css="a > img")
+	public WebElement logOut;
+
+	public WebElement loadaccounts;
+	
+	public void loginICICI(String loginUserName, String loginPassword, String loginUserID) throws Exception
+	{		
+			logInPage.userName.clear();
+			logInPage.userName.sendKeys(loginUserName);
+			logInPage.password.clear();
+			logInPage.password.sendKeys(loginPassword);
+			logInPage.userID.clear();
+			logInPage.userID.sendKeys(loginUserID);
+
+			WebDriverWait wait = new WebDriverWait(driver, 200); 
+			Locatable hoverItem = (Locatable) loginBtn;
+			//Mouse mouse = ((HasInputDevices) driver).getMouse();
+			//mouse.mouseMove(hoverItem.getCoordinates());
+			Thread.sleep(6000);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("arcotsubmit")));
+			loginBtn.click();
+			driver.manage().timeouts().pageLoadTimeout(12000, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(30000000, TimeUnit.SECONDS);
+	}
+	
+	public void loginAXIS(String loginUserName, String loginPassword, String loginUserID) throws Exception
+	{		
+		new Select(driver.findElement(By.cssSelector("select[name=\"Internet Banking\"]"))).selectByVisibleText("Corporate Banking");
+		driver.findElement(By.cssSelector("div.internetBanking > img[alt=\"Search\"]")).click();
+		driver.manage().timeouts().pageLoadTimeout(12000, TimeUnit.SECONDS);
+		driver.findElement(By.linkText("Continue to login")).click();
+		driver.manage().timeouts().pageLoadTimeout(90000, TimeUnit.SECONDS);
+		driver.findElement(By.name("CorporateSignonCorpId")).clear();
+		driver.findElement(By.name("CorporateSignonCorpId")).sendKeys(loginUserName);
+		driver.findElement(By.name("CorporateSignonUserName")).clear();
+		driver.findElement(By.name("CorporateSignonUserName")).sendKeys(loginUserID);
+		driver.findElement(By.name("CorporateSignonPassword")).clear();
+		driver.findElement(By.name("CorporateSignonPassword")).sendKeys(loginPassword);
+		driver.findElement(By.id("button1")).click();
+		driver.manage().timeouts().pageLoadTimeout(12000, TimeUnit.SECONDS);
+	}
+	
+	public void loginUBI(String loginUserName, String loginPassword, String loginUserID) throws Exception
+	{	
+//		driver.switchTo().activeElement();
+		driver.findElement(By.cssSelector("input.okButton"));
+//		driver.manage().timeouts().implicitlyWait(12000, TimeUnit.SECONDS);
+//		driver.switchTo().defaultContent();
+		driver.findElement(By.id("CorpIdAsId")).clear();
+		driver.findElement(By.id("CorpIdAsId")).sendKeys(loginUserName);
+		driver.findElement(By.id("UserNameAsId")).clear();
+		driver.findElement(By.id("UserNameAsId")).sendKeys(loginUserID);
+		driver.findElement(By.id("PasswordAsId")).clear();
+		driver.findElement(By.id("PasswordAsId")).sendKeys(loginPassword);
+//		driver.switchTo().activeElement();
+//		driver.findElement(By.cssSelector("input.okButton"));
+//		driver.manage().timeouts().pageLoadTimeout(12000, TimeUnit.SECONDS);
+//		driver.switchTo().defaultContent();
+		driver.findElement(By.name("Action.CorpUser.Signon")).click();
+		driver.manage().timeouts().pageLoadTimeout(12000, TimeUnit.SECONDS);
+	}
+	
+	public void loginSBI(String loginUserName, String loginPassword) throws Exception
+	{		
+		driver.findElement(By.id("username")).clear();
+		driver.findElement(By.id("username")).sendKeys(loginUserName);
+		driver.findElement(By.id("label2")).clear();
+		driver.findElement(By.id("label2")).sendKeys(loginPassword);
+		driver.findElement(By.id("Button2")).click();
+		driver.manage().timeouts().pageLoadTimeout(12000, TimeUnit.SECONDS);
+	}
+	
+	public void loginOBC(String loginUserName, String loginPassword, String loginUserID) throws Exception
+	{		
+		driver.findElement(By.name("CorporateSignonCorpId")).clear();
+		driver.findElement(By.name("CorporateSignonCorpId")).sendKeys(loginUserName);
+		driver.findElement(By.name("CorporateSignonUserName")).clear();
+		driver.findElement(By.name("CorporateSignonUserName")).sendKeys(loginUserID);
+		driver.findElement(By.name("Action.ForgotPassword.FindMain")).click();
+		closeAlert("");
+		driver.findElement(By.name("CorporateSignonPassword")).clear();
+		driver.findElement(By.name("CorporateSignonPassword")).sendKeys(loginPassword);
+		driver.findElement(By.name("Action.CorpUser.Signon")).click();
+	}
+
+	/*private void closeAlert(String string) {
+		// TODO Auto-generated method stub*/
+		
+	}
+
+
+
